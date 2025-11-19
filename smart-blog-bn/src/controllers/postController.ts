@@ -52,6 +52,7 @@ export const savePost = async(req:AuthRequest, res:Response)=>{
         })
     }catch(err:any){
         console.error(err)
+        console.log("HSBJwadaw")
         res.status(500).json({message: err?.mesaage})
     }
 

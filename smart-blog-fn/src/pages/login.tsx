@@ -8,7 +8,7 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     // context eka athule ewa eliyta gnnwa
-    const {user , setUser} = useAuth()
+    const { setUser} = useAuth()
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -22,31 +22,23 @@ const Login: React.FC = () => {
         }
 
         try{
-            const obj = {
-                email:email,
-                password:password,
-            }
-            const response:any = await login(obj.email, obj.password);
+            const res = await login(email, password)
+            console.log(res.data.accessToken)
 
-            const token = response.data.accessToken
-            const refreshToken = response.data.refreshToken
-
-            if(!token) {
+            if(!res.data.accessToken) {
                 alert("Login failed. Please try again.");
                 return;
             }
 
-            await localStorage.setItem('token', token);
-            await localStorage.setItem('refreshToken' , refreshToken)
+            await localStorage.setItem("accessToken", res.data.accessToken)
+            await localStorage.setItem("refreshToken", res.data.refreshToken)
 
             const details = await getMydetails()
             setUser(details.data)
             console.log(details.data)
 
-            console.log(response.data);
             alert("Login successful!");
             navigate('/home');
-            return;
         }catch (error) {
             console.error("Login failed:", error);
             alert("Login failed. Please try again.");

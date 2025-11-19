@@ -7,12 +7,13 @@ const AuthContext = createContext<any>(null)
 
 export const AuthProvider = ({children} : any)=>{
     const [user,setUser] = useState<any>(null)
+    const [loading , setLoading] = useState(true)
 
     // component eka render wena time allaganna puluwn
     // dependency array dala nattam render wenw hamawlema component eka..
     // note krgnna theory parts tika and revise those
     useEffect(()=>{
-        const token =localStorage.getItem("token")
+        const token =localStorage.getItem("accessToken")
         if(token){
             getMydetails().then((res) =>{
                 setUser(res.data)
@@ -20,12 +21,17 @@ export const AuthProvider = ({children} : any)=>{
                 // if user token or user data expired... or the api call fail moment
                 setUser(null)
                 console.error(err)
+            }).finally(()=>{
+                setLoading(false)
             })
+        } else{
+            setUser(null)
+            setLoading(false)
         }
     },[])
     
     return(
-        <AuthContext.Provider value={{user , setUser}}>
+        <AuthContext.Provider value={{user , setUser , loading }}>
             {children}
         </AuthContext.Provider>
     )
@@ -35,5 +41,8 @@ export const AuthProvider = ({children} : any)=>{
 // context eka use krnn useContext eka one
 export const useAuth = ()=>{
     const context = useContext(AuthContext)
+    if(!context) {
+        throw new Error("useAuth must be used within an AuthProvider")
+    }
     return context
 }

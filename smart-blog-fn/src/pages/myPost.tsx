@@ -1,7 +1,6 @@
-import React from "react"
 
 export default function MyPost(){
     return(
-        <div  className="bg-color: blue">Hii</div>
+        <div  className="bg-color: blue">My Post</div>
     )
 }

@@ -24,6 +24,8 @@ const navigate = useNavigate()
 const {user} = useAuth();
 
 const handleLogin = () => {
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("refreshToken")
     navigate("/login")
 }
 
@@ -45,6 +47,7 @@ return (
                 )} */}
         </div>
         <div>
+            <span>{user?.email}</span>
             <button onClick={handleLogin}>Logout</button>
         </div>
     </header>

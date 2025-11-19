@@ -1,6 +1,6 @@
 // axios content api.ts -> api services
 
-import axios, { Axios, AxiosError } from 'axios';
+import axios, {  AxiosError } from 'axios';
 import { handleRefreshToken } from './auth';
 
 const api = axios.create({
@@ -16,12 +16,12 @@ api.interceptors.request.use((config) => {
     // config.headers // show the headers
     // config.url // show the destination of the url
 
-    const token =localStorage.getItem("token")
+    const accessToken =localStorage.getItem("accessToken")
 
     const isPublic = PUBLIC_ENDPOINTS.some((url) =>config.url?.includes(url))
 
-    if (token && !isPublic){
-        config.headers.Authorization = `Bearer ${token} `
+    if (accessToken && !isPublic){
+        config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config
 })
