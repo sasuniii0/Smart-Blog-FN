@@ -1,5 +1,4 @@
-# Smart Blog – Frontend README (short version)
-## Smart Blog Frontend
+# Smart Blog Frontend
 
 Smart Blog Frontend is a modern, responsive blogging platform UI built using React, designed for smooth reading, clean layouts, and seamless user interaction.
 
